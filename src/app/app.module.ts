@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { GridComponent } from './grid/grid.component';
+import { FieldComponent } from './field/field.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    GridComponent
+    GridComponent,
+    FieldComponent
   ],
   imports: [
     BrowserModule,

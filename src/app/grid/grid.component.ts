@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-grid',
@@ -6,12 +6,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./grid.component.sass']
 })
 export class GridComponent implements OnInit {
-  @Input() width: Number = 10
-  @Input() height: Number = 10
+  readonly WIDTH: number = 60;
+  readonly HEIGHT: number = 20;
+  fields: any[][] = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    this.newBoard();
   }
-
+  
+  newBoard(){
+    this.fields = Array(this.HEIGHT).fill(Array(this.WIDTH).fill(null));
+  }
 }

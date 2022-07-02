@@ -1,1 +1,7 @@
-<p>{{height}}</p>
+<table class="grid">
+    <tr class="row" *ngFor="let row of fields">
+        <td class="column" *ngFor="let field of row">
+            <app-field class="field"></app-field>
+        </td>
+    </tr>
+</table>
