@@ -6,10 +6,14 @@ import { Color } from './settings.service';
 })
 export class FieldsService {
   readonly WIDTH: number = 70;
-  readonly HEIGHT: number = 20;
+  readonly HEIGHT: number = 35;
   fields: string[][] = [];
 
   constructor() { 
+    this.createBoard()
+  }
+
+  createBoard(){
     for(let i = 0; i < this.HEIGHT; i++){
       this.fields[i] = [];
       for(let j = 0; j < this.WIDTH; j++){

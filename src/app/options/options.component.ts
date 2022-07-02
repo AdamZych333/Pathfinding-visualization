@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FieldsService } from '../fields.service';
 import { Color, Placeable, SettingsService } from '../settings.service';
 
 @Component({
@@ -15,11 +16,15 @@ export class OptionsComponent {
   ]
   selectedOption: Placeable = this.placeables[0];
 
-  constructor(private settingsService: SettingsService){
+  constructor(private settingsService: SettingsService, private fieldsService: FieldsService){
     settingsService.setSelectedPlaceable(this.selectedOption);
   }
 
   onPlaceableChange(){
     this.settingsService.setSelectedPlaceable(this.selectedOption);
+  }
+
+  onClearClick(){
+    this.fieldsService.createBoard();
   }
 }
