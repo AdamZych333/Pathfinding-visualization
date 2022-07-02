@@ -6,7 +6,7 @@ import { Component, OnInit} from '@angular/core';
   styleUrls: ['./grid.component.sass']
 })
 export class GridComponent implements OnInit {
-  readonly WIDTH: number = 60;
+  readonly WIDTH: number = 70;
   readonly HEIGHT: number = 20;
   fields: any[][] = [];
 
