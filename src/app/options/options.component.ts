@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-
-interface Option {
-  value: string;
-  viewValue: string;
-}
+import { Placeable, SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-options',
@@ -11,11 +7,19 @@ interface Option {
   styleUrls: ['./options.component.sass']
 })
 export class OptionsComponent {
-  placeables: Option[] = [
-    {value: 'wall', viewValue: 'Wall'},
-    {value: 'empty', viewValue: 'Empty'},
-    {value: 'start', viewValue: 'Start'},
-    {value: 'end', viewValue: 'End'},
+  placeables: Placeable[] = [
+    new Placeable('wall', 'Wall', 'black'),
+    new Placeable('empty', 'Empty', 'white'),
+    new Placeable('start', 'Start', 'green'),
+    new Placeable('end', 'End', 'red'),
   ]
-  selectedOption: Option = this.placeables[0];
+  selectedOption: Placeable = this.placeables[0];
+
+  constructor(private settingsService: SettingsService){
+    settingsService.setSelectedPlaceable(this.selectedOption);
+  }
+
+  onPlaceableChange(){
+    this.settingsService.setSelectedPlaceable(this.selectedOption);
+  }
 }
