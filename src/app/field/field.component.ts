@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { SettingsService } from '../settings.service';
+import { Component, Input } from '@angular/core';
+import { Color, SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-field',
@@ -7,13 +7,14 @@ import { SettingsService } from '../settings.service';
   styleUrls: ['./field.component.sass']
 })
 export class FieldComponent {
+  @Input() bgColor: string = Color.EMPTY;
   hoverColor: string = '';
 
   constructor(private settingsService: SettingsService){}
 
   changeOutline(){
-    const color: string | undefined = this.settingsService.getSelectedPlaceable()?.color;
-    this.hoverColor = color != undefined? color: '';
+    const type: string | undefined = this.settingsService.getSelectedPlaceable()?.type;
+    this.hoverColor = type != undefined? type: '';
   }
 
   resetOutline(){

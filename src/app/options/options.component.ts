@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Placeable, SettingsService } from '../settings.service';
+import { Color, Placeable, SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-options',
@@ -8,10 +8,10 @@ import { Placeable, SettingsService } from '../settings.service';
 })
 export class OptionsComponent {
   placeables: Placeable[] = [
-    new Placeable('wall', 'Wall', 'black'),
-    new Placeable('empty', 'Empty', 'white'),
-    new Placeable('start', 'Start', 'green'),
-    new Placeable('end', 'End', 'red'),
+    new Placeable('wall', 'Wall', Color.WALL),
+    new Placeable('empty', 'Empty', Color.EMPTY),
+    new Placeable('start', 'Start', Color.START),
+    new Placeable('end', 'End', Color.END),
   ]
   selectedOption: Placeable = this.placeables[0];
 

@@ -1,7 +1,7 @@
 <table class="grid">
-    <tr class="row" *ngFor="let row of fields">
-        <td class="column" *ngFor="let field of row">
-            <app-field class="field"></app-field>
+    <tr class="row" *ngFor="let row of fields; let i = index" [attr.data-index]="i">
+        <td class="column" *ngFor="let field of row; let j = index" [attr.data-index]="j">
+            <app-field class="field" [bgColor]="field" (click)="onFieldClick(i, j)"></app-field>
         </td>
     </tr>
 </table>

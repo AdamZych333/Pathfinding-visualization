@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 
+export const enum Color{
+  WALL = 'hsla(0, 0%, 30%, 1)',
+  EMPTY = 'white',
+  START = 'green',
+  END = 'red',
+}
+
 interface Option {
   value: string;
   viewValue: string;
@@ -8,11 +15,11 @@ interface Option {
 export class Placeable implements Option{
   value: string;
   viewValue: string;
-  color: string;
-  constructor(value: string, viewValue: string, color: string){
+  type: string;
+  constructor(value: string, viewValue: string, type: string){
     this.value = value;
     this.viewValue = viewValue;
-    this.color = color;
+    this.type = type;
   }
 }
 
