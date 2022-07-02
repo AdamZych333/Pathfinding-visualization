@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FieldsService } from '../fields.service';
-import { Color, Placeable, SettingsService } from '../settings.service';
+import { Color, FieldsService } from '../fields.service';
+import { Placeable, SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-options',
@@ -14,14 +14,21 @@ export class OptionsComponent {
     new Placeable('start', 'Start', Color.START),
     new Placeable('end', 'End', Color.END),
   ]
-  selectedOption: Placeable = this.placeables[0];
+  algorithms: string[] = [
+    'A*',
+    'BFS',
+    'DFS',
+    'Dijkstra'
+  ]
+  selectedPlaceable: Placeable = this.placeables[0];
+  selectedAlgorithm: string = this.algorithms[0];
 
   constructor(private settingsService: SettingsService, private fieldsService: FieldsService){
-    settingsService.setSelectedPlaceable(this.selectedOption);
+    settingsService.setSelectedPlaceable(this.selectedPlaceable);
   }
 
   onPlaceableChange(){
-    this.settingsService.setSelectedPlaceable(this.selectedOption);
+    this.settingsService.setSelectedPlaceable(this.selectedPlaceable);
   }
 
   onClearClick(){

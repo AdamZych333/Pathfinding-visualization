@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Color, SettingsService } from '../settings.service';
+import { Color } from '../fields.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-field',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FieldsService } from '../fields.service';
-import { Color, SettingsService } from '../settings.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-grid',

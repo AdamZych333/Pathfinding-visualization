@@ -1,12 +1,20 @@
 <div class="menu">
     <div class="placeables">
         <label for="placeables">Block to place:</label>
-        <select name="placeables" [(ngModel)]="selectedOption" (ngModelChange)="onPlaceableChange()">
+        <select name="placeables" [(ngModel)]="selectedPlaceable" (ngModelChange)="onPlaceableChange()">
             <option *ngFor="let placeable of placeables" [ngValue]="placeable">
                 {{placeable.viewValue}}
             </option>
         </select>
-        <div class="type" [style.background-color]="selectedOption.type"></div>
+        <div class="type" [style.background-color]="selectedPlaceable.type"></div>
     </div>
     <button class="clear-btn" (click)="onClearClick()">Clear</button>
+    <div class="algorithms">
+        <label for="algorithms">Algorithm:</label>
+        <select name="algorithms" [(ngModel)]="selectedAlgorithm">
+            <option *ngFor="let algorithm of algorithms">
+                {{algorithm}}
+            </option>
+        </select>
+    </div>
 </div>
