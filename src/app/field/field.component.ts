@@ -54,6 +54,9 @@ export class FieldComponent implements OnInit{
   }
 
   onMouseUp(){
-    this.settingsService.rollBackSelectedPlaceable();
+    if(this.field == null) return;
+    const color = this.field.getColor();
+    if(color === FieldColor.END || color === FieldColor.START)
+      this.settingsService.rollBackSelectedPlaceable();
   }
 }
