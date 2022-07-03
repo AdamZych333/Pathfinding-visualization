@@ -4,14 +4,13 @@ import { Node } from "../node";
 
 export function astar(grid: Grid, startNode: Node, endNode: Node): Node[]{
     console.log("astar");
-    console.log(startNode, endNode);
     let open: Node[] = [];
     let closed: Node[] = [];
     open.push(startNode);
 
     while(open.length > 0){
         const currentNode: Node = open.reduce((prev, curr) => {
-            return prev.getFCost < curr.getFCost || prev.getFCost === curr.getFCost && prev.gCost < curr.gCost? prev: curr;
+            return prev.getFCost < curr.getFCost || prev.getFCost === curr.getFCost && prev.gCost < curr.gCost? curr: prev;
         });
 
         open = open.filter(node => node != currentNode);

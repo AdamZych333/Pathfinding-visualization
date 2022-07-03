@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlgorithmsService } from '../algorithms.service';
 import { FieldsService } from '../fields.service';
+import { RepainterService } from '../repainter.service';
 import { SettingsService } from '../settings.service';
 import { Option, Placeable } from '../utils/selector-options';
 
@@ -15,7 +16,7 @@ export class OptionsComponent {
   algorithms: Option[];
   placeables: Placeable[];
 
-  constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService){
+  constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService){
     this.selectedPlaceable = settingsService.getSelectedPlaceable();
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
     this.algorithms = settingsService.getAlgorithmsOptions();
@@ -28,6 +29,7 @@ export class OptionsComponent {
 
   onClearClick(){
     this.fieldsService.createBoard();
+    this.repainter.restart();
   }
 
   onStartClick(){

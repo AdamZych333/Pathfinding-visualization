@@ -1,4 +1,6 @@
+import { Action } from "rxjs/internal/scheduler/Action";
 import { FieldsService } from "../fields.service";
+import { RepainterService } from "../repainter.service";
 import { FieldColor } from "./field-color";
 import { Node } from "./node";
 
@@ -7,9 +9,11 @@ export class Grid{
     private gridWidth: number = 0;
     private gridHeight: number = 0;
     fieldsService: FieldsService;
+    repainter: RepainterService;
 
-    constructor(fieldsService: FieldsService){
+    constructor(fieldsService: FieldsService, repainter: RepainterService){
         this.fieldsService = fieldsService;
+        this.repainter = repainter;
         this.createGrid();
     }
 
@@ -32,14 +36,10 @@ export class Grid{
         const y = [0, 0, 1, -1];
         
         for(let i = 0; i < x.length; i++){
-            for(let j = 0; j < y.length; j++){
-                if(i == 0 && j == 0) continue;
-
-                const neighbourX = node.x + i;
-                const neighbourY = node.y + j;
-                if(neighbourX >= 0 && neighbourX < this.gridWidth && neighbourY >= 0 && neighbourY < this.gridHeight){
-                    neighbours.push(this.nodes[neighbourX][neighbourY])
-                }
+            const neighbourX = node.x + x[i];
+            const neighbourY = node.y + y[i];
+            if(neighbourX >= 0 && neighbourX < this.gridWidth && neighbourY >= 0 && neighbourY < this.gridHeight){
+                neighbours.push(this.nodes[neighbourX][neighbourY])
             }
         }
 
@@ -47,6 +47,6 @@ export class Grid{
     }
 
     repaintField(node: Node, color: FieldColor){
-        this.fieldsService.setField(node.x, node.y, color);
+        this.repainter.addToQueue({x: node.x, y: node.y, color: color});
     }
 }

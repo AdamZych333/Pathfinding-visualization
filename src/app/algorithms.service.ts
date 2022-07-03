@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
+import { RepainterService } from './repainter.service';
 import { Algorithm } from './utils/algorithms';
 import { astar } from './utils/algorithms/A-star';
 import { bfs } from './utils/algorithms/bfs';
@@ -13,14 +14,14 @@ import { Node } from './utils/node';
   providedIn: 'root'
 })
 export class AlgorithmsService {
-  constructor(private fieldService: FieldsService) {}
+  constructor(private fieldService: FieldsService, private repainter: RepainterService) {}
 
   startAlgorithm(name: string){ 
     this.restartPaint();
     const startField: {x: number; y: number} | null = this.fieldService.findField(e => e == FieldColor.START);
     const endField: {x: number; y: number} | null = this.fieldService.findField(e => e == FieldColor.END);
     if(startField == null || endField == null) return;
-    const grid = new Grid(this.fieldService);
+    const grid = new Grid(this.fieldService, this.repainter);
     const startNode: Node = grid.nodes[startField.x][startField.y];
     const endNode: Node = grid.nodes[endField.x][endField.y];
     let path: Node[] = [];
@@ -44,7 +45,7 @@ export class AlgorithmsService {
 
   private paintPath(path: Node[]){
     for(let node of path){
-      this.fieldService.setField(node.x, node.y, FieldColor.PATH);
+      this.repainter.addToQueue({x: node.x, y: node.y, color: FieldColor.PATH});
     }
   }
 
