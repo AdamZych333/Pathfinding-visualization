@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { Color, FieldsService } from '../fields.service';
-import { Placeable, SettingsService } from '../settings.service';
+import { FieldsService } from '../fields.service';
+import { SettingsService } from '../settings.service';
+import { Algorithm } from '../utils/algorithms';
+import { FieldColor } from '../utils/field-color';
+import { Option, Placeable } from '../utils/selector-options';
 
 @Component({
   selector: 'app-options',
@@ -9,19 +12,20 @@ import { Placeable, SettingsService } from '../settings.service';
 })
 export class OptionsComponent {
   placeables: Placeable[] = [
-    new Placeable('wall', 'Wall', Color.WALL),
-    new Placeable('empty', 'Empty', Color.EMPTY),
-    new Placeable('start', 'Start', Color.START),
-    new Placeable('end', 'End', Color.END),
+    new Placeable('wall', 'Wall', FieldColor.WALL),
+    new Placeable('empty', 'Empty', FieldColor.EMPTY),
+    new Placeable('start', 'Start', FieldColor.START),
+    new Placeable('end', 'End', FieldColor.END),
   ]
-  algorithms: string[] = [
-    'A*',
-    'BFS',
-    'DFS',
-    'Dijkstra'
-  ]
+  algorithms: Option[] = [
+    {value: 'A*', viewValue: Algorithm.ASTAR},
+    {value: 'bfs', viewValue: Algorithm.BFS},
+    {value: 'dfs', viewValue: Algorithm.DFS},
+    {value: 'dijkstra', viewValue: Algorithm.DIJKSTRA},
+  ];
+
   selectedPlaceable: Placeable = this.placeables[0];
-  selectedAlgorithm: string = this.algorithms[0];
+  selectedAlgorithm: Option = this.algorithms[0];
 
   constructor(private settingsService: SettingsService, private fieldsService: FieldsService){
     settingsService.setSelectedPlaceable(this.selectedPlaceable);

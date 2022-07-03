@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export const enum Color{
-  WALL = 'hsla(0, 0%, 30%, 1)',
-  EMPTY = 'white',
-  START = 'green',
-  END = 'red',
-  OPEN = 'purple',
-  CLOSED = 'blue',
-}
+import { FieldColor } from './utils/field-color';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +17,11 @@ export class FieldsService {
     for(let i = 0; i < this.HEIGHT; i++){
       this.fields[i] = [];
       for(let j = 0; j < this.WIDTH; j++){
-        this.fields[i][j] = Color.EMPTY;
+        this.fields[i][j] = FieldColor.EMPTY;
       }
     }
-    this.fields[0][0] = Color.START;
-    this.fields[this.HEIGHT-1][this.WIDTH-1] = Color.END;
+    this.fields[0][0] = FieldColor.START;
+    this.fields[this.HEIGHT-1][this.WIDTH-1] = FieldColor.END;
   }
 
   getFields(): string[][]{
@@ -41,14 +33,14 @@ export class FieldsService {
   }
 
   setField(x: number, y: number, color: string){
-    if(this.fields[x][y] == Color.START || this.fields[x][y] == Color.END) return;
-    if(color === Color.START){
-      const start = this.findField(e => e == Color.START);
-      if(start !== null) this.fields[start.x][start.y] = Color.EMPTY;
+    if(this.fields[x][y] == FieldColor.START || this.fields[x][y] == FieldColor.END) return;
+    if(color === FieldColor.START){
+      const start = this.findField(e => e == FieldColor.START);
+      if(start !== null) this.fields[start.x][start.y] = FieldColor.EMPTY;
     }
-    else if(color === Color.END){
-      const end = this.findField(e => e == Color.END);
-      if(end !== null) this.fields[end.x][end.y] = Color.EMPTY;
+    else if(color === FieldColor.END){
+      const end = this.findField(e => e == FieldColor.END);
+      if(end !== null) this.fields[end.x][end.y] = FieldColor.EMPTY;
     }
     this.fields[x][y] = color;
   }

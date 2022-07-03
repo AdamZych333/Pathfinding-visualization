@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Color } from '../fields.service';
 import { SettingsService } from '../settings.service';
+import { FieldColor } from '../utils/field-color';
 
 @Component({
   selector: 'app-field',
@@ -8,7 +8,7 @@ import { SettingsService } from '../settings.service';
   styleUrls: ['./field.component.sass']
 })
 export class FieldComponent {
-  @Input() bgColor: string = Color.EMPTY;
+  @Input() bgColor: string = FieldColor.EMPTY;
   hoverColor: string = '';
 
   constructor(private settingsService: SettingsService){}

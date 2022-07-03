@@ -12,8 +12,8 @@
     <div class="algorithms">
         <label for="algorithms">Algorithm:</label>
         <select name="algorithms" [(ngModel)]="selectedAlgorithm">
-            <option *ngFor="let algorithm of algorithms">
-                {{algorithm}}
+            <option *ngFor="let algorithm of algorithms" [ngValue]="algorithm">
+                {{algorithm.viewValue}}
             </option>
         </select>
     </div>
