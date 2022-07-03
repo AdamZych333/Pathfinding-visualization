@@ -6,11 +6,13 @@ export function astar(grid: Grid, startNode: Node, endNode: Node): Node[]{
     console.log("astar");
     let open: Node[] = [];
     let closed: Node[] = [];
+    startNode.gCost = 0;
+    startNode.hCost = startNode.getDistance(endNode);
     open.push(startNode);
 
     while(open.length > 0){
         const currentNode: Node = open.reduce((prev, curr) => {
-            return prev.getFCost < curr.getFCost || prev.getFCost === curr.getFCost && prev.gCost < curr.gCost? curr: prev;
+            return prev.getFCost() < curr.getFCost() || prev.getFCost() === curr.getFCost() && prev.gCost < curr.gCost? prev: curr;
         });
 
         open = open.filter(node => node != currentNode);

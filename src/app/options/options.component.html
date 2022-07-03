@@ -8,6 +8,18 @@
         </select>
         <div class="type" [style.background-color]="selectedPlaceable.type"></div>
     </div>
+    <div class="delay">
+        <div class="delay-label">Algorithm speed</div>
+        <mat-slider
+        (input)="onSliderChange($event)"
+        thumbLabel
+        step="1"
+        min="0"
+        max="{{maxSliderValue}}"
+        value="{{maxSliderValue}}"
+        aria-label="units">
+    </mat-slider>
+    </div>
     <button class="clear-btn" (click)="onClearClick()">Clear</button>
     <button class="start-btn" (click)="onStartClick()">Start</button>
     <div class="algorithms">

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RepainterService } from './repainter.service';
 import { Algorithm } from './utils/algorithms';
 import { FieldColor } from './utils/field-color';
 import { Placeable, Option } from './utils/selector-options';
@@ -23,7 +24,7 @@ export class SettingsService {
   selectedPlaceable: Placeable = this.placeables[0];
   selectedAlgorithm: Option = this.algorithms[0];
 
-  constructor() { }
+  constructor(private repainter: RepainterService) { }
 
   setSelectedPlaceable(selectedPlaceable: Placeable){
     this.selectedPlaceable = selectedPlaceable;
@@ -51,5 +52,9 @@ export class SettingsService {
 
   getPlaceableByColor(color: FieldColor){
     return this.placeables.find(p => p.type === color);
+  }
+
+  setAlgorithmDelay(delay: number){
+    this.repainter.changeDelay(delay);
   }
 }

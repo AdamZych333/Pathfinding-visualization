@@ -15,6 +15,7 @@ export class OptionsComponent {
   selectedAlgorithm: Option;
   algorithms: Option[];
   placeables: Placeable[];
+  maxSliderValue: number = 100;
 
   constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService){
     this.selectedPlaceable = settingsService.getSelectedPlaceable();
@@ -38,5 +39,9 @@ export class OptionsComponent {
 
   onAlgorithmChange(){
     this.settingsService.setSelectedAlgorithm(this.selectedAlgorithm);
+  }
+
+  onSliderChange(event: any){
+    this.settingsService.setAlgorithmDelay(this.maxSliderValue - event.value);
   }
 }

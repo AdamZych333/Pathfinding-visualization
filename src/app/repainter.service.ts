@@ -10,27 +10,45 @@ interface Action{
   providedIn: 'root'
 })
 export class RepainterService {
-  DELAY: number = 10;
-  queue: Action[] = [];
+  delay: number = 0;
+  queue: Action[];
+  timer: ReturnType<typeof setTimeout> = setTimeout(() => this.repaintFromQueue(), this.delay);
+
 
   constructor(private fieldsService: FieldsService) {
-      setInterval(() => this.repaintFromQueue(), this.DELAY);
-      this.restart();
+    this.queue = [];
   }
 
   restart(){
     this.queue = [];
+    this.startTimer()
   }
 
   addToQueue(next: Action){
       this.queue.push(next);
   }
 
-  private repaintFromQueue(){
-      if(this.queue.length === 0) return;
-      const action = this.queue[0];
-      this.queue = this.queue.filter(e => e != action);
+  stopTimer(){
+    clearTimeout(this.timer);
+  }
 
-      this.fieldsService.setField(action.x, action.y, action.color);
+  startTimer(){
+    this.timer = setTimeout(() => this.repaintFromQueue(), this.delay);
+  }
+
+  changeDelay(delay: number){
+    this.delay = delay;
+  }
+
+  private repaintFromQueue(){
+    if(this.queue.length === 0) {
+      this.startTimer()
+      return;
+    }
+    const action = this.queue[0];
+    this.queue = this.queue.filter(e => e != action);
+    this.fieldsService.setField(action.x, action.y, action.color);
+  
+    this.startTimer()
   }
 }
