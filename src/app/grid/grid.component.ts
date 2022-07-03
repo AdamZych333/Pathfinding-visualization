@@ -14,7 +14,8 @@ export class GridComponent {
     this.fields = fieldsService.getFields();
   }
 
-  onFieldClick(x: number, y: number){
+  onFieldClick(event:any, x: number, y: number){
+    if(event.which !== 1) return;
     const selectedOption = this.settingsService.getSelectedPlaceable();
     const type = selectedOption != null? selectedOption.type: '';
     if(type != undefined)
