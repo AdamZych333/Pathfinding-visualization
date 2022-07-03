@@ -24,7 +24,7 @@ export class Grid{
         for(let i = 0; i < this.gridWidth; i++){
           this.nodes.push([]);
           for(let j = 0; j < this.gridHeight; j++){
-            const walkable = this.fieldsService.getField(i, j) !== FieldColor.WALL
+            const walkable = this.fieldsService.getField(i, j).getColor() !== FieldColor.WALL
             this.nodes[i].push(new Node(i, j, walkable));
           }
         }

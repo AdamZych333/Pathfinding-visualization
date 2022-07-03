@@ -1,11 +1,7 @@
 <table class="grid">
-    <tr class="row" *ngFor="let row of fields; let i = index" [attr.data-index]="i">
-        <td class="column" *ngFor="let field of row; let j = index" [attr.data-index]="j">
-            <app-field class="field" [bgColor]="field" 
-            (mouseenter)="onMouseEnter($event, i, j)"
-            (mousedown)="onMouseDown($event, i, j)"
-            (mouseup)="onMouseUp()"
-            ></app-field>
+    <tr class="row" *ngFor="let row of fields">
+        <td class="column" *ngFor="let field of row">
+            <app-field class="field" [field]="field"></app-field>
         </td>
     </tr>
 </table>

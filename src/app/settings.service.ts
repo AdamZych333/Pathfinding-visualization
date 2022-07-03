@@ -21,13 +21,22 @@ export class SettingsService {
     {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
   ];
 
+  prevSelectedPlaceable: Placeable | null = null;
   selectedPlaceable: Placeable = this.placeables[0];
   selectedAlgorithm: Option = this.algorithms[0];
 
   constructor(private repainter: RepainterService) { }
 
   setSelectedPlaceable(selectedPlaceable: Placeable){
+    this.prevSelectedPlaceable = this.selectedPlaceable;
     this.selectedPlaceable = selectedPlaceable;
+  }
+
+  rollBackSelectedPlaceable(){
+    if(this.prevSelectedPlaceable != null){
+      this.selectedPlaceable = this.prevSelectedPlaceable;
+      this.prevSelectedPlaceable = null;
+    }
   }
 
   getSelectedPlaceable(){
@@ -56,5 +65,11 @@ export class SettingsService {
 
   setAlgorithmDelay(delay: number){
     this.repainter.changeDelay(delay);
+  }
+
+  setPlaceableByColor(color: FieldColor){
+    const placeable = this.placeables.find(p => p.type == color);
+    if(placeable != undefined)
+      this.selectedPlaceable = placeable;
   }
 }

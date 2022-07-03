@@ -6,6 +6,7 @@ import { astar } from './utils/algorithms/A-star';
 import { bfs } from './utils/algorithms/bfs';
 import { dfs } from './utils/algorithms/dfs';
 import { dijkstra } from './utils/algorithms/dijkstra';
+import { Field } from './utils/field';
 import { FieldColor } from './utils/field-color';
 import { Grid } from './utils/grid';
 import { Node } from './utils/node';
@@ -18,8 +19,8 @@ export class AlgorithmsService {
 
   startAlgorithm(name: string){ 
     this.restartPaint();
-    const startField: {x: number; y: number} | null = this.fieldService.findField(e => e == FieldColor.START);
-    const endField: {x: number; y: number} | null = this.fieldService.findField(e => e == FieldColor.END);
+    const startField: {x: number; y: number} | null = this.fieldService.findField(e => e.getColor() == FieldColor.START);
+    const endField: {x: number; y: number} | null = this.fieldService.findField(e => e.getColor() == FieldColor.END);
     if(startField == null || endField == null) return;
     const grid = new Grid(this.fieldService, this.repainter);
     const startNode: Node = grid.nodes[startField.x][startField.y];
@@ -52,8 +53,8 @@ export class AlgorithmsService {
   private restartPaint(){
     for(let i = 0; i < this.fieldService.getFields().length; i++){
       for(let j = 0; j < this.fieldService.getFields()[i].length; j++){
-        let field: string = this.fieldService.getField(i, j);
-        if(field !== FieldColor.WALL && field !== FieldColor.START && field !== FieldColor.END){
+        let field: Field = this.fieldService.getField(i, j);
+        if(field.getColor() !== FieldColor.WALL && field.getColor() !== FieldColor.START && field.getColor() !== FieldColor.END){
           this.fieldService.setField(i, j, FieldColor.EMPTY);
         }
       }

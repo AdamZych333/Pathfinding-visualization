@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Field } from './utils/field';
 import { FieldColor } from './utils/field-color';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { FieldColor } from './utils/field-color';
 export class FieldsService {
   readonly WIDTH: number = 70;
   readonly HEIGHT: number = 35;
-  fields: string[][] = [];
+  fields: Field[][] = [];
 
   constructor() { 
     this.createBoard()
@@ -17,14 +18,14 @@ export class FieldsService {
     for(let i = 0; i < this.HEIGHT; i++){
       this.fields[i] = [];
       for(let j = 0; j < this.WIDTH; j++){
-        this.fields[i][j] = FieldColor.EMPTY;
+        this.fields[i][j] = new Field(i, j);
       }
     }
-    this.fields[0][0] = FieldColor.START;
-    this.fields[this.HEIGHT-1][this.WIDTH-1] = FieldColor.END;
+    this.fields[0][0].setColor(FieldColor.START);
+    this.fields[this.HEIGHT-1][this.WIDTH-1].setColor(FieldColor.END);
   }
 
-  getFields(): string[][]{
+  getFields(): Field[][]{
     return this.fields;
   }
 
@@ -32,23 +33,23 @@ export class FieldsService {
     return this.fields[x][y];
   }
 
-  setField(x: number, y: number, color: string){
-    if(this.fields[x][y] == FieldColor.START || this.fields[x][y] == FieldColor.END) return;
+  setField(x: number, y: number, color: FieldColor){
+    if(this.fields[x][y].getColor() == FieldColor.START || this.fields[x][y].getColor() == FieldColor.END) return;
     if(color === FieldColor.START){
-      const start = this.findField(e => e == FieldColor.START);
-      if(start !== null) this.fields[start.x][start.y] = FieldColor.EMPTY;
+      const start = this.findField(e => e.getColor() == FieldColor.START);
+      if(start !== null) this.fields[start.x][start.y].setColor(FieldColor.EMPTY);
     }
     else if(color === FieldColor.END){
-      const end = this.findField(e => e == FieldColor.END);
-      if(end !== null) this.fields[end.x][end.y] = FieldColor.EMPTY;
+      const end = this.findField(e => e.getColor() == FieldColor.END);
+      if(end !== null) this.fields[end.x][end.y].setColor(FieldColor.EMPTY);
     }
-    this.fields[x][y] = color;
+    this.fields[x][y].setColor(color);
   }
 
-  findField(condition: (field: string) => boolean){
+  findField(condition: (field: Field) => boolean){
     for(let i = 0; i < this.HEIGHT; i++){
       for(let j = 0; j < this.WIDTH; j++){
-        if(condition(this.fields[i][j])) return {x: i, y: j};
+        if(condition(this.fields[i][j])) return this.fields[i][j];
       }
     }
     return null;

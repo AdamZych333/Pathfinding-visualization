@@ -1,4 +1,9 @@
-<button (mouseover)="changeOutline()" (mouseout)="resetOutline()" 
+<button 
     [style.--hover-color]="hoverColor"
-    [style.background-color]="bgColor">
+    [style.background-color]="field?.getColor()"
+    (mouseover)="changeOutline()" 
+    (mouseout)="resetOutline()" 
+    (mouseenter)="onMouseEnter($event)"
+    (mousedown)="onMouseDown($event)"
+    (mouseup)="onMouseUp()">
 </button>
