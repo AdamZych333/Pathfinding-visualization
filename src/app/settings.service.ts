@@ -48,4 +48,8 @@ export class SettingsService {
   setSelectedAlgorithm(selectedAlgorithm: Option){
     this.selectedAlgorithm = selectedAlgorithm;
   }
+
+  getPlaceableByColor(color: FieldColor){
+    return this.placeables.find(p => p.type === color);
+  }
 }

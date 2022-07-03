@@ -2,8 +2,9 @@
     <tr class="row" *ngFor="let row of fields; let i = index" [attr.data-index]="i">
         <td class="column" *ngFor="let field of row; let j = index" [attr.data-index]="j">
             <app-field class="field" [bgColor]="field" 
-            (mouseenter)="onFieldClick($event, i, j)"
-            (mousedown)="onFieldClick($event, i, j)"
+            (mouseenter)="onMouseEnter($event, i, j)"
+            (mousedown)="onMouseDown($event, i, j)"
+            (mouseup)="onMouseUp()"
             ></app-field>
         </td>
     </tr>
