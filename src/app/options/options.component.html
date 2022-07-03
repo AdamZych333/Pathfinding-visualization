@@ -9,9 +9,10 @@
         <div class="type" [style.background-color]="selectedPlaceable.type"></div>
     </div>
     <button class="clear-btn" (click)="onClearClick()">Clear</button>
+    <button class="start-btn" (click)="onStartClick()">Start</button>
     <div class="algorithms">
         <label for="algorithms">Algorithm:</label>
-        <select name="algorithms" [(ngModel)]="selectedAlgorithm">
+        <select name="algorithms" [(ngModel)]="selectedAlgorithm" (ngModelChange)="onAlgorithmChange()">
             <option *ngFor="let algorithm of algorithms" [ngValue]="algorithm">
                 {{algorithm.viewValue}}
             </option>

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { AlgorithmsService } from '../algorithms.service';
 import { FieldsService } from '../fields.service';
 import { SettingsService } from '../settings.service';
-import { Algorithm } from '../utils/algorithms';
-import { FieldColor } from '../utils/field-color';
 import { Option, Placeable } from '../utils/selector-options';
 
 @Component({
@@ -11,24 +10,16 @@ import { Option, Placeable } from '../utils/selector-options';
   styleUrls: ['./options.component.sass']
 })
 export class OptionsComponent {
-  placeables: Placeable[] = [
-    new Placeable('wall', 'Wall', FieldColor.WALL),
-    new Placeable('empty', 'Empty', FieldColor.EMPTY),
-    new Placeable('start', 'Start', FieldColor.START),
-    new Placeable('end', 'End', FieldColor.END),
-  ]
-  algorithms: Option[] = [
-    {value: 'A*', viewValue: Algorithm.ASTAR},
-    {value: 'bfs', viewValue: Algorithm.BFS},
-    {value: 'dfs', viewValue: Algorithm.DFS},
-    {value: 'dijkstra', viewValue: Algorithm.DIJKSTRA},
-  ];
+  selectedPlaceable: Placeable;
+  selectedAlgorithm: Option;
+  algorithms: Option[];
+  placeables: Placeable[];
 
-  selectedPlaceable: Placeable = this.placeables[0];
-  selectedAlgorithm: Option = this.algorithms[0];
-
-  constructor(private settingsService: SettingsService, private fieldsService: FieldsService){
-    settingsService.setSelectedPlaceable(this.selectedPlaceable);
+  constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService){
+    this.selectedPlaceable = settingsService.getSelectedPlaceable();
+    this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
+    this.algorithms = settingsService.getAlgorithmsOptions();
+    this.placeables = settingsService.getPlaceablesOptions();
   }
 
   onPlaceableChange(){
@@ -37,5 +28,13 @@ export class OptionsComponent {
 
   onClearClick(){
     this.fieldsService.createBoard();
+  }
+
+  onStartClick(){
+    this.algorithmsService.startAlgorithm(this.selectedAlgorithm.value);
+  }
+
+  onAlgorithmChange(){
+    this.settingsService.setSelectedAlgorithm(this.selectedAlgorithm);
   }
 }

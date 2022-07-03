@@ -5,4 +5,5 @@ export const enum FieldColor{
     END = 'red',
     OPEN = 'purple',
     CLOSED = 'blue',
+    PATH = 'yellow',
   }
