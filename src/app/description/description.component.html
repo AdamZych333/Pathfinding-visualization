@@ -1,1 +1,6 @@
-<p>description works!</p>
+<div class="blocks">
+    <div class="block" *ngFor="let block of blocks">
+        {{block.viewValue}}
+        <div class="color" [style.background-color]='block.type'></div>
+    </div>
+</div>

@@ -10,11 +10,19 @@ import { Field } from './utils/model/field';
 import { FieldColor } from './utils/constants/field-color';
 import { Grid } from './utils/model/grid';
 import { Node } from './utils/model/node';
+import { Option } from './utils/model/selector-options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlgorithmsService {
+  algorithms: Option[] = [
+    {value: Algorithm.ASTAR, viewValue: 'A*'},
+    {value: Algorithm.BFS, viewValue: 'BFS'},
+    {value: Algorithm.DFS, viewValue: 'DFS'},
+    {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
+  ];
+
   constructor(private fieldService: FieldsService, private repainter: RepainterService) {}
 
   startAlgorithm(name: string){ 

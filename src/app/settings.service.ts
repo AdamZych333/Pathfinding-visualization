@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AlgorithmsService } from './algorithms.service';
 import { BlockService } from './block.service';
 import { RepainterService } from './repainter.service';
 import { Algorithm } from './utils/constants/algorithms';
@@ -9,19 +10,13 @@ import { Block, Option } from './utils/model/selector-options';
   providedIn: 'root'
 })
 export class SettingsService {
-  algorithms: Option[] = [
-    {value: Algorithm.ASTAR, viewValue: 'A*'},
-    {value: Algorithm.BFS, viewValue: 'BFS'},
-    {value: Algorithm.DFS, viewValue: 'DFS'},
-    {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
-  ];
-
   prevSelectedPlaceable: Block | null = null;
   selectedPlaceable: Block;
-  selectedAlgorithm: Option = this.algorithms[0];
+  selectedAlgorithm: Option;
 
-  constructor(private repainter: RepainterService, blockService: BlockService) {
+  constructor(private repainter: RepainterService, blockService: BlockService, algorithmsSerive: AlgorithmsService) {
     this.selectedPlaceable = blockService.getPlaceables()[0];
+    this.selectedAlgorithm = algorithmsSerive.algorithms[0];
    }
 
   setSelectedPlaceable(selectedPlaceable: Block){
@@ -40,10 +35,6 @@ export class SettingsService {
     return this.selectedPlaceable;
   }
 
-  getAlgorithmsOptions(){
-    return this.algorithms;
-  }
-
   getSelectedAlgorithm(){
     return this.selectedAlgorithm;
   }
@@ -55,10 +46,4 @@ export class SettingsService {
   setAlgorithmDelay(delay: number){
     this.repainter.changeDelay(delay);
   }
-
-  // setPlaceableByColor(color: FieldColor){
-  //   const placeable = this.placeables.find(p => p.type == color);
-  //   if(placeable != undefined)
-  //     this.selectedPlaceable = placeable;
-  // }
 }

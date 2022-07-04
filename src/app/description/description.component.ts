@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BlockService } from '../block.service';
+import { Block } from '../utils/model/selector-options';
 
 @Component({
   selector: 'app-description',
@@ -6,7 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./description.component.sass']
 })
 export class DescriptionComponent {
+  blocks: Block[];
 
-  constructor() { }
+  constructor(blockService: BlockService) {
+    this.blocks = blockService.blocks;
+    console.log(this.blocks);
+   }
 
 }

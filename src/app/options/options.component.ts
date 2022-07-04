@@ -19,7 +19,7 @@ export class OptionsComponent {
 
   constructor(public settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService, blockService: BlockService){
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
-    this.algorithms = settingsService.getAlgorithmsOptions();
+    this.algorithms = algorithmsService.algorithms;
     this.placeables = blockService.getPlaceables();
   }
 
