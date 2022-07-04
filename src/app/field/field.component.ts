@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FieldsService } from '../fields.service';
 import { SettingsService } from '../settings.service';
-import { Field } from '../utils/field';
-import { FieldColor } from '../utils/field-color';
-import { Placeable } from '../utils/selector-options';
+import { Field } from '../utils/model/field';
+import { FieldColor } from '../utils/constants/field-color';
+import { BlockService } from '../block.service';
 
 @Component({
   selector: 'app-field',
@@ -14,7 +14,7 @@ export class FieldComponent implements OnInit{
   @Input() field: Field | null = null;
   hoverColor: string = '';
 
-  constructor(private settingsService: SettingsService, private fieldsService: FieldsService) {}
+  constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private blockService: BlockService) {}
 
   ngOnInit(): void {
   }
@@ -47,7 +47,7 @@ export class FieldComponent implements OnInit{
     this.onMouseEnter(event);
     const color = this.field.getColor();
     if(color === FieldColor.END || color === FieldColor.START){
-      const placeable = this.settingsService.getPlaceableByColor(color);
+      const placeable = this.blockService.getBlockByColor(color);
       if(placeable != undefined)
         this.settingsService.setSelectedPlaceable(placeable)
     }

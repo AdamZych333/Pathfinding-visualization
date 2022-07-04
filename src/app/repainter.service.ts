@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
-import { FieldColor } from './utils/field-color';
+import { FieldColor } from './utils/constants/field-color';
 
 interface Action{
   x: number, y: number, color: FieldColor

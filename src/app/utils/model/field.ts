@@ -1,4 +1,4 @@
-import { FieldColor } from "./field-color";
+import { FieldColor } from "../constants/field-color";
 
 export class Field{
     private color: FieldColor = FieldColor.EMPTY;

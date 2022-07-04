@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AlgorithmsService } from '../algorithms.service';
+import { BlockService } from '../block.service';
 import { FieldsService } from '../fields.service';
 import { RepainterService } from '../repainter.service';
 import { SettingsService } from '../settings.service';
-import { Option, Placeable } from '../utils/selector-options';
+import { Option, Block } from '../utils/model/selector-options';
 
 @Component({
   selector: 'app-options',
@@ -11,21 +12,15 @@ import { Option, Placeable } from '../utils/selector-options';
   styleUrls: ['./options.component.sass']
 })
 export class OptionsComponent {
-  selectedPlaceable: Placeable;
   selectedAlgorithm: Option;
   algorithms: Option[];
-  placeables: Placeable[];
+  placeables: Block[];
   maxSliderValue: number = 100;
 
-  constructor(private settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService){
-    this.selectedPlaceable = settingsService.getSelectedPlaceable();
+  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService, blockService: BlockService){
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
     this.algorithms = settingsService.getAlgorithmsOptions();
-    this.placeables = settingsService.getPlaceablesOptions();
-  }
-
-  onPlaceableChange(){
-    this.settingsService.setSelectedPlaceable(this.selectedPlaceable);
+    this.placeables = blockService.getPlaceables();
   }
 
   onClearClick(){

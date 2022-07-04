@@ -1,6 +1,6 @@
-import { FieldColor } from "../field-color";
-import { Grid } from "../grid";
-import { Node } from "../node";
+import { FieldColor } from "../constants/field-color";
+import { Grid } from "../model/grid";
+import { Node } from "../model/node";
 
 export function astar(grid: Grid, startNode: Node, endNode: Node): Node[]{
     console.log("astar");

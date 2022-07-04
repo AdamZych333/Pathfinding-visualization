@@ -1,12 +1,12 @@
 <div class="menu">
     <div class="placeables">
         <label for="placeables">Block to place:</label>
-        <select name="placeables" [(ngModel)]="selectedPlaceable" (ngModelChange)="onPlaceableChange()">
+        <select name="placeables" [(ngModel)]="settingsService.selectedPlaceable">
             <option *ngFor="let placeable of placeables" [ngValue]="placeable">
                 {{placeable.viewValue}}
             </option>
         </select>
-        <div class="type" [style.background-color]="selectedPlaceable.type"></div>
+        <div class="type" [style.background-color]="settingsService.selectedPlaceable.type"></div>
     </div>
     <div class="delay">
         <div class="delay-label">Algorithm speed</div>

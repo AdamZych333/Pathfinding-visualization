@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Field } from './utils/field';
-import { FieldColor } from './utils/field-color';
+import { Field } from './utils/model/field';
+import { FieldColor } from './utils/constants/field-color';
 
 @Injectable({
   providedIn: 'root'

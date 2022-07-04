@@ -10,6 +10,7 @@ import { GridComponent } from './grid/grid.component';
 import { FieldComponent } from './field/field.component';
 import { OptionsComponent } from './options/options.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DescriptionComponent } from './description/description.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToolbarComponent,
     GridComponent,
     FieldComponent,
-    OptionsComponent
+    OptionsComponent,
+    DescriptionComponent
   ],
   imports: [
     BrowserModule,

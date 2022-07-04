@@ -1,11 +1,11 @@
-import { FieldColor } from "./field-color";
+import { FieldColor } from "../constants/field-color";
 
 export interface Option {
     value: string;
     viewValue: string;
   }
   
-export class Placeable implements Option{
+export class Block implements Option{
     value: string;
     viewValue: string;
     type: FieldColor;

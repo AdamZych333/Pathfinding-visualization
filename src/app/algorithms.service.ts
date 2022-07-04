@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
 import { RepainterService } from './repainter.service';
-import { Algorithm } from './utils/algorithms';
+import { Algorithm } from './utils/constants/algorithms';
 import { astar } from './utils/algorithms/A-star';
 import { bfs } from './utils/algorithms/bfs';
 import { dfs } from './utils/algorithms/dfs';
 import { dijkstra } from './utils/algorithms/dijkstra';
-import { Field } from './utils/field';
-import { FieldColor } from './utils/field-color';
-import { Grid } from './utils/grid';
-import { Node } from './utils/node';
+import { Field } from './utils/model/field';
+import { FieldColor } from './utils/constants/field-color';
+import { Grid } from './utils/model/grid';
+import { Node } from './utils/model/node';
 
 @Injectable({
   providedIn: 'root'

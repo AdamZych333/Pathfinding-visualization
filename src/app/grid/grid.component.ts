@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FieldsService } from '../fields.service';
-import { Field } from '../utils/field';
+import { Field } from '../utils/model/field';
 
 @Component({
   selector: 'app-grid',

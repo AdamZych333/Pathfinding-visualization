@@ -1,7 +1,7 @@
 import { Action } from "rxjs/internal/scheduler/Action";
-import { FieldsService } from "../fields.service";
-import { RepainterService } from "../repainter.service";
-import { FieldColor } from "./field-color";
+import { FieldsService } from "../../fields.service";
+import { RepainterService } from "../../repainter.service";
+import { FieldColor } from "../constants/field-color";
 import { Node } from "./node";
 
 export class Grid{

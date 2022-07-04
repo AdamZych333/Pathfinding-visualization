@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
+import { BlockService } from './block.service';
 import { RepainterService } from './repainter.service';
-import { Algorithm } from './utils/algorithms';
-import { FieldColor } from './utils/field-color';
-import { Placeable, Option } from './utils/selector-options';
+import { Algorithm } from './utils/constants/algorithms';
+import { FieldColor } from './utils/constants/field-color';
+import { Block, Option } from './utils/model/selector-options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  placeables: Placeable[] = [
-    new Placeable('wall', 'Wall', FieldColor.WALL),
-    new Placeable('empty', 'Empty', FieldColor.EMPTY),
-    new Placeable('start', 'Start', FieldColor.START),
-    new Placeable('end', 'End', FieldColor.END),
-  ]
   algorithms: Option[] = [
     {value: Algorithm.ASTAR, viewValue: 'A*'},
     {value: Algorithm.BFS, viewValue: 'BFS'},
@@ -21,13 +16,15 @@ export class SettingsService {
     {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
   ];
 
-  prevSelectedPlaceable: Placeable | null = null;
-  selectedPlaceable: Placeable = this.placeables[0];
+  prevSelectedPlaceable: Block | null = null;
+  selectedPlaceable: Block;
   selectedAlgorithm: Option = this.algorithms[0];
 
-  constructor(private repainter: RepainterService) { }
+  constructor(private repainter: RepainterService, blockService: BlockService) {
+    this.selectedPlaceable = blockService.getPlaceables()[0];
+   }
 
-  setSelectedPlaceable(selectedPlaceable: Placeable){
+  setSelectedPlaceable(selectedPlaceable: Block){
     this.prevSelectedPlaceable = this.selectedPlaceable;
     this.selectedPlaceable = selectedPlaceable;
   }
@@ -43,10 +40,6 @@ export class SettingsService {
     return this.selectedPlaceable;
   }
 
-  getPlaceablesOptions(){
-    return this.placeables;
-  }
-
   getAlgorithmsOptions(){
     return this.algorithms;
   }
@@ -59,17 +52,13 @@ export class SettingsService {
     this.selectedAlgorithm = selectedAlgorithm;
   }
 
-  getPlaceableByColor(color: FieldColor){
-    return this.placeables.find(p => p.type === color);
-  }
-
   setAlgorithmDelay(delay: number){
     this.repainter.changeDelay(delay);
   }
 
-  setPlaceableByColor(color: FieldColor){
-    const placeable = this.placeables.find(p => p.type == color);
-    if(placeable != undefined)
-      this.selectedPlaceable = placeable;
-  }
+  // setPlaceableByColor(color: FieldColor){
+  //   const placeable = this.placeables.find(p => p.type == color);
+  //   if(placeable != undefined)
+  //     this.selectedPlaceable = placeable;
+  // }
 }
