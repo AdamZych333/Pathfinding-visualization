@@ -24,7 +24,7 @@ export class OptionsComponent {
   }
 
   onClearClick(){
-    this.fieldsService.createBoard();
+    this.fieldsService.clearBoard();
     this.repainter.restart();
   }
 

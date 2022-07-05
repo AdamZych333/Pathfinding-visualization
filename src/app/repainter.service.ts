@@ -25,7 +25,7 @@ export class RepainterService {
   }
 
   addToQueue(next: Action){
-      this.queue.push(next);
+    this.queue.push(next);
   }
 
   stopTimer(){

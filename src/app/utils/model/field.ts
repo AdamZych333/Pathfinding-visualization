@@ -4,6 +4,9 @@ export class Field{
     private color: FieldColor = FieldColor.EMPTY;
     x: number;
     y: number;
+    gCost: number = Number.MAX_SAFE_INTEGER;
+    hCost: number = Number.MAX_SAFE_INTEGER;
+    parent: Field | null = null;
 
     constructor(x: number, y: number){
         this.x = x;
@@ -16,5 +19,30 @@ export class Field{
 
     getColor(){
         return this.color;
+    }
+
+    getFCost(){
+        return this.gCost + this.hCost;
+    }
+
+    getDistance(fieldB: Field){
+        return Math.abs(this.x - fieldB.x) + Math.abs(this.y - fieldB.y);
+    }
+
+    retecePath(startField: Field){
+        const path: Field[] = [];
+        let current: Field = this;
+
+        while(current != startField){
+            path.push(current);
+            if(current.parent == null) return [];
+            current = current.parent;
+        }
+
+        return path.reverse();
+    }
+
+    isWalkable(){
+        return this.color !== FieldColor.WALL;
     }
 }

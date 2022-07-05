@@ -35,13 +35,9 @@ export class FieldsService {
 
   setField(x: number, y: number, color: FieldColor){
     if(this.fields[x][y].getColor() == FieldColor.START || this.fields[x][y].getColor() == FieldColor.END) return;
-    if(color === FieldColor.START){
-      const start = this.findField(e => e.getColor() == FieldColor.START);
+    if(color === FieldColor.START || color === FieldColor.END){
+      const start = this.findField(e => e.getColor() == color);
       if(start !== null) this.fields[start.x][start.y].setColor(FieldColor.EMPTY);
-    }
-    else if(color === FieldColor.END){
-      const end = this.findField(e => e.getColor() == FieldColor.END);
-      if(end !== null) this.fields[end.x][end.y].setColor(FieldColor.EMPTY);
     }
     this.fields[x][y].setColor(color);
   }
@@ -54,4 +50,30 @@ export class FieldsService {
     }
     return null;
   }
+
+  clearBoard(){
+    for(let i = 0; i < this.HEIGHT; i++){
+      for(let j = 0; j < this.WIDTH; j++){
+        const field: Field = this.fields[i][j];
+        if(field.getColor() === FieldColor.CLOSED || field.getColor() === FieldColor.OPEN || field.getColor() === FieldColor.PATH)
+          field.setColor(FieldColor.EMPTY);
+      }
+    }
+  }
+
+  getNeighbours(field: Field): Field[] {
+    let neighbours: Field[] = [];
+    const x = [1, -1, 0, 0];
+    const y = [0, 0, 1, -1];
+
+    for(let i = 0; i < x.length; i++){
+        const neighbourX = field.x + x[i];
+        const neighbourY = field.y + y[i];
+        if(neighbourX >= 0 && neighbourX < this.HEIGHT && neighbourY >= 0 && neighbourY < this.WIDTH){
+            neighbours.push(this.fields[neighbourX][neighbourY])
+        }
+    }
+
+    return neighbours;
+}
 }
