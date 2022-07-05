@@ -6,8 +6,8 @@ import { FieldColor } from './utils/constants/field-color';
   providedIn: 'root'
 })
 export class FieldsService {
-  readonly WIDTH: number = 70;
-  readonly HEIGHT: number = 35;
+  readonly WIDTH: number = 55;
+  readonly HEIGHT: number = 25;
   fields: Field[][] = [];
 
   constructor() { 

@@ -40,7 +40,7 @@ export class RepainterService {
     this.delay = delay;
   }
 
-  private repaintFromQueue(){
+  repaintFromQueue(){
     if(this.queue.length === 0) {
       this.startTimer()
       return;

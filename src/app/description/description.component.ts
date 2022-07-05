@@ -12,7 +12,6 @@ export class DescriptionComponent {
 
   constructor(blockService: BlockService) {
     this.blocks = blockService.blocks;
-    console.log(this.blocks);
    }
 
 }

@@ -1,9 +1,11 @@
-<button 
+<div>
+    <button class="btn"
     [style.--hover-color]="hoverColor"
-    [style.background-color]="field?.getColor()"
+    [@color]="getTrigger()"
     (mouseover)="changeOutline()" 
     (mouseout)="resetOutline()" 
     (mouseenter)="onMouseEnter($event)"
     (mousedown)="onMouseDown($event)"
     (mouseup)="onMouseUp()">
 </button>
+</div>
