@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
 import { Algorithm } from './utils/constants/algorithms';
-import { dijkstra } from './utils/algorithms/dijkstra';
 import { Field } from './utils/model/field';
 import { FieldColor } from './utils/constants/field-color';
 import { Option } from './utils/model/selector-options';
@@ -41,7 +40,7 @@ export class AlgorithmsService {
         this.toAnimate = this.dfs(startField, endField);
         break;
       case Algorithm.DIJKSTRA:
-        dijkstra();
+        this.toAnimate = this.dijkstra(startField, endField);
         break;
     }
     
@@ -184,6 +183,50 @@ export class AlgorithmsService {
       }
     }
 
+    return toAnimate;
+  }
+
+  dijkstra(start: Field, end: Field): {field: Field, color: FieldColor}[]{
+    const toAnimate: {field: Field, color: FieldColor}[] = [];
+    let open: Field[] = [];
+    let closed: Field[] = [];
+    start.gCost = 0;
+    start.hCost = start.getDistance(end);
+    open.push(start);
+
+    while(open.length > 0){
+      const current: Field = open.reduce((prev, curr) => {
+          return prev.gCost < curr.gCost? prev: curr;
+      });
+
+
+      open = open.filter(f => f != current);
+      closed.push(current);
+      toAnimate.push({field: current, color: FieldColor.CLOSED});
+
+      if(current == end){
+        this.fieldService.retecePath(current, start).forEach(e => {
+          toAnimate.push({field: e, color: FieldColor.PATH});
+        });
+        return toAnimate;
+      } 
+
+      for(let neighbour of this.fieldService.getNeighbours(current)){
+        if(!neighbour.isWalkable() || closed.includes(neighbour)) continue;
+
+        const newNeighbourCost: number = current.gCost + current.getDistance(neighbour);
+        const isNotInOpen: boolean = !open.includes(neighbour);
+        if(newNeighbourCost < neighbour.gCost || isNotInOpen){
+          neighbour.gCost = newNeighbourCost;
+          neighbour.parent = current;
+
+          if(isNotInOpen){
+            open.push(neighbour);
+            toAnimate.push({field: neighbour, color: FieldColor.OPEN});
+          }
+        }
+      }    
+    }
     return toAnimate;
   }
 }
