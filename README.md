@@ -1,7 +1,7 @@
 # PathfindingVisualization
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
-You can access is on https://adamzych333.github.io/Pathfinding-visualization/.
+You can access it on https://adamzych333.github.io/Pathfinding-visualization/.
 
 ## Development server
 
