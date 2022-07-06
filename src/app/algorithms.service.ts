@@ -86,6 +86,7 @@ export class AlgorithmsService {
     open.push(start);
 
     while(open.length > 0){
+      console.log(open);
       const current: Field = open.reduce((prev, curr) => {
           return prev.getFCost() < curr.getFCost() || prev.getFCost() === curr.getFCost() && prev.gCost < curr.gCost? prev: curr;
       });
@@ -156,9 +157,8 @@ export class AlgorithmsService {
 
   dfs(start: Field, end: Field): {field: Field, color: FieldColor}[]{
     const toAnimate: {field: Field, color: FieldColor}[] = [];
-    let open: Field[] = [];
+    let open: Field[] = [start];
     let closed: Field[] = [];
-    open.push(start)
 
     while(open.length > 0){
       const current = open.shift();
@@ -176,10 +176,8 @@ export class AlgorithmsService {
       for(let neighbour of this.fieldService.getNeighbours(current)){
         if(!neighbour.isWalkable() || closed.includes(neighbour)) continue;
         neighbour.parent = current;
-        if(!open.includes(neighbour)){
-          open.unshift(neighbour);
-          toAnimate.push({field: neighbour, color: FieldColor.OPEN});
-        }
+        open.unshift(neighbour);
+        toAnimate.push({field: neighbour, color: FieldColor.OPEN});
       }
     }
 

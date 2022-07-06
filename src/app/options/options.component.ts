@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlgorithmsService } from '../algorithms.service';
 import { BlockService } from '../block.service';
 import { FieldsService } from '../fields.service';
+import { MazeService } from '../maze.service';
 import { SettingsService } from '../settings.service';
 import { Option, Block } from '../utils/model/selector-options';
 
@@ -16,7 +17,7 @@ export class OptionsComponent {
   placeables: Block[];
   maxSliderValue: number = 100;
 
-  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, public algorithmsService: AlgorithmsService, blockService: BlockService){
+  constructor(private mazeService: MazeService, public settingsService: SettingsService, private fieldsService: FieldsService, public algorithmsService: AlgorithmsService, blockService: BlockService){
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
     this.algorithms = algorithmsService.algorithms;
     this.placeables = blockService.getPlaceables();
@@ -48,5 +49,10 @@ export class OptionsComponent {
 
   onSliderChange(event: any){
     this.algorithmsService.delay = 2*(this.maxSliderValue - event.value);
+  }
+
+  onGenerateMazeClick(){
+    if(!this.algorithmsService.running)
+      this.mazeService.generateMaze()
   }
 }

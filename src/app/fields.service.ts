@@ -87,5 +87,15 @@ export class FieldsService {
     }
 
     return path.reverse();
-}
+  }
+
+  removeWalls(){
+    for(let i = 0; i < this.HEIGHT; i++){
+      for(let j = 0; j < this.WIDTH; j++){
+        const field: Field = this.fields[i][j];
+        if((field.getColor() !== FieldColor.END && field.getColor() !== FieldColor.START && field.getColor() !== FieldColor.EMPTY))
+          field.setColor(FieldColor.EMPTY);
+      }
+    }
+  }
 }
