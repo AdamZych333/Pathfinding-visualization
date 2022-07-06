@@ -11,8 +11,8 @@ export class BlockService {
     new Block('empty', 'Empty', FieldColor.EMPTY),
     new Block('start', 'Start', FieldColor.START),
     new Block('end', 'End', FieldColor.END),
-    new Block('open', 'Open', FieldColor.OPEN),
-    new Block('closed', 'Closed', FieldColor.CLOSED),
+    new Block('open', 'To be visited', FieldColor.OPEN),
+    new Block('closed', 'Visited', FieldColor.CLOSED),
     new Block('path', 'Path', FieldColor.PATH),
   ]
 
