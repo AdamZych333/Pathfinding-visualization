@@ -75,5 +75,17 @@ export class FieldsService {
     }
 
     return neighbours;
+  }
+
+  retecePath(current: Field, startField: Field){
+    const path: Field[] = [];
+
+    while(current != startField){
+        path.push(current);
+        if(current.parent == null) return [];
+        current = current.parent;
+    }
+
+    return path.reverse();
 }
 }

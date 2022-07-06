@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlgorithmsService } from './algorithms.service';
 import { BlockService } from './block.service';
-import { RepainterService } from './repainter.service';
-import { Algorithm } from './utils/constants/algorithms';
-import { FieldColor } from './utils/constants/field-color';
 import { Block, Option } from './utils/model/selector-options';
 
 @Injectable({
@@ -14,7 +11,7 @@ export class SettingsService {
   selectedPlaceable: Block;
   selectedAlgorithm: Option;
 
-  constructor(private repainter: RepainterService, blockService: BlockService, algorithmsSerive: AlgorithmsService) {
+  constructor(blockService: BlockService, algorithmsSerive: AlgorithmsService) {
     this.selectedPlaceable = blockService.getPlaceables()[0];
     this.selectedAlgorithm = algorithmsSerive.algorithms[0];
    }
@@ -41,9 +38,5 @@ export class SettingsService {
 
   setSelectedAlgorithm(selectedAlgorithm: Option){
     this.selectedAlgorithm = selectedAlgorithm;
-  }
-
-  setAlgorithmDelay(delay: number){
-    this.repainter.changeDelay(delay);
   }
 }

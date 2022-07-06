@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AlgorithmsService } from '../algorithms.service';
 import { BlockService } from '../block.service';
 import { FieldsService } from '../fields.service';
-import { RepainterService } from '../repainter.service';
 import { SettingsService } from '../settings.service';
 import { Option, Block } from '../utils/model/selector-options';
 
@@ -17,7 +16,7 @@ export class OptionsComponent {
   placeables: Block[];
   maxSliderValue: number = 100;
 
-  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, private repainter: RepainterService, blockService: BlockService){
+  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, blockService: BlockService){
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
     this.algorithms = algorithmsService.algorithms;
     this.placeables = blockService.getPlaceables();
@@ -25,7 +24,6 @@ export class OptionsComponent {
 
   onClearClick(){
     this.fieldsService.clearBoard();
-    this.repainter.restart();
   }
 
   onStartClick(){
@@ -37,6 +35,6 @@ export class OptionsComponent {
   }
 
   onSliderChange(event: any){
-    this.settingsService.setAlgorithmDelay(this.maxSliderValue - event.value);
+    this.algorithmsService.delay = 2*(this.maxSliderValue - event.value);
   }
 }

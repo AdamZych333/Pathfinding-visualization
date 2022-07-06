@@ -5,7 +5,7 @@ import { Field } from '../utils/model/field';
 import { FieldColor } from '../utils/constants/field-color';
 import { BlockService } from '../block.service';
 import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
-import { RepainterService } from '../repainter.service';
+import { AlgorithmsService } from '../algorithms.service';
 
 @Component({
   selector: 'app-field',
@@ -48,10 +48,12 @@ import { RepainterService } from '../repainter.service';
         sequence([
           style({
             backgroundColor: FieldColor.WALL,
-            opacity: 0.1,
+            transform: "scale(.3)",
+            borderRadius: "100%"
           }),
           animate('0.2s', style({
-            opacity: 1,
+            transform: "scale(1)",
+            borderRadius: "0%"
           }))
         ])
       ]),
@@ -59,10 +61,12 @@ import { RepainterService } from '../repainter.service';
         sequence([
           style({
             backgroundColor: FieldColor.START,
-            opacity: 0.1,
+            transform: "scale(.3)",
+            borderRadius: "100%"
           }),
           animate('0.2s', style({
-            opacity: 1,
+            transform: "scale(1)",
+            borderRadius: "0%"
           }))
         ])
       ]),
@@ -70,10 +74,12 @@ import { RepainterService } from '../repainter.service';
         sequence([
           style({
             backgroundColor: FieldColor.END,
-            opacity: 0.1,
+            transform: "scale(.3)",
+            borderRadius: "100%"
           }),
           animate('0.2s', style({
-            opacity: 1,
+            transform: "scale(1)",
+            borderRadius: "0%"
           }))
         ])
       ]),
@@ -81,10 +87,12 @@ import { RepainterService } from '../repainter.service';
         sequence([
           style({
             backgroundColor: FieldColor.OPEN,
-            opacity: 0.1,
+            transform: "scale(.3)",
+            borderRadius: "100%"
           }),
-          animate('0.5s', style({
-            opacity: 1,
+          animate('0.2s', style({
+            transform: "scale(1)",
+            borderRadius: "0%"
           }))
         ])
       ]),
@@ -102,10 +110,12 @@ import { RepainterService } from '../repainter.service';
         sequence([
           style({
             backgroundColor: FieldColor.PATH,
-            opacity: 0.1,
+            transform: "scale(.3)",
+            borderRadius: "100%"
           }),
           animate('0.2s', style({
-            opacity: 1,
+            transform: "scale(1)",
+            borderRadius: "0%"
           }))
         ])
       ]),
@@ -115,7 +125,7 @@ import { RepainterService } from '../repainter.service';
 export class FieldComponent{
   @Input() field: Field | null = null;
   hoverColor: string = '';
-  constructor(private repainter: RepainterService, private settingsService: SettingsService, private fieldsService: FieldsService, private blockService: BlockService) {}
+  constructor(private algorithmService: AlgorithmsService, private settingsService: SettingsService, private fieldsService: FieldsService, private blockService: BlockService) {}
 
   changeOutline(){
     const type: string | undefined = this.settingsService.getSelectedPlaceable()?.type;
@@ -143,7 +153,6 @@ export class FieldComponent{
       if(field !== null) field.setColor(FieldColor.EMPTY);
     }
     this.field.setColor(color);
-    
   }
 
   onMouseDown(event:any){

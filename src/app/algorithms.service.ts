@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
-import { RepainterService } from './repainter.service';
 import { Algorithm } from './utils/constants/algorithms';
 import { bfs } from './utils/algorithms/bfs';
 import { dfs } from './utils/algorithms/dfs';
@@ -19,18 +18,19 @@ export class AlgorithmsService {
     {value: Algorithm.DFS, viewValue: 'DFS'},
     {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
   ];
+  delay: number = 0;
 
-  constructor(private fieldService: FieldsService, private repainter: RepainterService) {}
+  constructor(private fieldService: FieldsService) {}
 
-  startAlgorithm(name: string){ 
+  startAlgorithm(name: string){
     this.fieldService.clearBoard()
     const startField: Field | null = this.fieldService.findField(e => e.getColor() == FieldColor.START);
     const endField: Field | null = this.fieldService.findField(e => e.getColor() == FieldColor.END);
     if(startField == null || endField == null) return;
-    let path: Field[] = [];
+    let toAnimate: {field: Field, color: FieldColor}[] = [];
     switch(name){
       case Algorithm.ASTAR:
-        path = this.astar(startField, endField);
+        toAnimate = this.astar(startField, endField);
         break;
       case Algorithm.BFS:
         bfs();
@@ -42,18 +42,22 @@ export class AlgorithmsService {
         dijkstra();
         break;
     }
-
-    this.paintPath(path);
+    
+    this.animateMoves(toAnimate);    
   }
 
-  private paintPath(path: Field[]){
-    for(let field of path){
-      this.repainter.addToQueue({x: field.x, y: field.y, color: FieldColor.PATH});
-    }
+  private animateMoves(toAnimate: {field: Field, color: FieldColor}[]){
+    const move = toAnimate[0];
+    toAnimate = toAnimate.filter(e => e != move);
+    setTimeout(() => {
+      this.fieldService.setField(move.field.x, move.field.y, move.color);
+      if(toAnimate.length > 0)
+        this.animateMoves(toAnimate);
+    }, this.delay);
   }
 
-  private astar(start: Field, end: Field): Field[]{
-    console.log("astar");
+  astar(start: Field, end: Field): {field: Field, color: FieldColor}[]{
+    const toAnimate: {field: Field, color: FieldColor}[] = [];
     let open: Field[] = [];
     let closed: Field[] = [];
     start.gCost = 0;
@@ -68,9 +72,14 @@ export class AlgorithmsService {
 
       open = open.filter(f => f != current);
       closed.push(current);
-      this.repainter.addToQueue({x: current.x, y: current.y, color: FieldColor.CLOSED});
+      toAnimate.push({field: current, color: FieldColor.CLOSED});
 
-      if(current == end) return current.retecePath(start);
+      if(current == end){
+        this.fieldService.retecePath(current, start).forEach(e => {
+          toAnimate.push({field: e, color: FieldColor.PATH});
+        });
+        return toAnimate;
+      } 
 
       for(let neighbour of this.fieldService.getNeighbours(current)){
         if(!neighbour.isWalkable() || closed.includes(neighbour)) continue;
@@ -83,14 +92,12 @@ export class AlgorithmsService {
           neighbour.parent = current;
 
           if(isNotInOpen){
-            console.log(neighbour)
             open.push(neighbour);
-            this.repainter.addToQueue({x: neighbour.x, y: neighbour.y, color: FieldColor.OPEN});
+            toAnimate.push({field: neighbour, color: FieldColor.OPEN});
           }
         }
       }    
+    }
+    return [];
   }
-
-  return [];
-}
 }
