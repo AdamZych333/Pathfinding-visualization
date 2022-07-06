@@ -21,6 +21,7 @@ export class AlgorithmsService {
   delay: number = 0;
   toAnimate: {field: Field, color: FieldColor}[] = [];
   running: boolean = false;
+  finnished: boolean = false;
 
   constructor(private fieldService: FieldsService) {}
 
@@ -46,13 +47,14 @@ export class AlgorithmsService {
         break;
     }
     
-    this.animateMoves();    
+    this.finnished? this.animateMovesImmidietly(): this.animateMoves();    
   }
 
   resetAlgorithm(){
     this.toAnimate = [];
     this.fieldService.clearBoard();
     this.running = false;
+    this.finnished = false;
   }
 
   private animateMoves(){
@@ -64,7 +66,15 @@ export class AlgorithmsService {
         this.animateMoves();
       else
         this.running = false;
+        this.finnished = true;
     }, this.delay);
+  }
+
+  private animateMovesImmidietly(){
+    for(let move of this.toAnimate){
+      this.fieldService.setField(move.field.x, move.field.y, move.color);
+    }
+    this.running = false;
   }
 
   astar(start: Field, end: Field): {field: Field, color: FieldColor}[]{

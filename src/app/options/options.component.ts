@@ -23,6 +23,7 @@ export class OptionsComponent {
   }
 
   onClearClick(){
+    this.algorithmsService.resetAlgorithm();
     this.fieldsService.clearBoard();
   }
 

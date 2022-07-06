@@ -4,127 +4,23 @@ import { SettingsService } from '../settings.service';
 import { Field } from '../utils/model/field';
 import { FieldColor } from '../utils/constants/field-color';
 import { BlockService } from '../block.service';
-import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 import { AlgorithmsService } from '../algorithms.service';
+import { normal } from '../utils/animations/field-animation';
+import { immidiate } from '../utils/animations/field-immidiate-animation';
 
 @Component({
   selector: 'app-field',
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.sass'],
   animations: [
-    trigger('color', [
-      state('empty', style({
-        backgroundColor: FieldColor.EMPTY
-      })),
-      state('wall', style({
-        backgroundColor: FieldColor.WALL
-      })),
-      state('start', style({
-        backgroundColor: FieldColor.START
-      })),
-      state('end', style({
-        backgroundColor: FieldColor.END
-      })),
-      state('open', style({
-        backgroundColor: FieldColor.OPEN
-      })),
-      state('closed', style({
-        backgroundColor: FieldColor.CLOSED
-      })),
-      state('path', style({
-        backgroundColor: FieldColor.PATH
-      })),
-      transition('* => empty', [
-        sequence([
-          style({
-            borderRadius: "50%"
-          }),
-          animate('0s', style({
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-      transition('* => wall', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.WALL,
-            transform: "scale(.3)",
-            borderRadius: "100%"
-          }),
-          animate('0.2s', style({
-            transform: "scale(1)",
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-      transition('* => start', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.START,
-            transform: "scale(.3)",
-            borderRadius: "100%"
-          }),
-          animate('0.2s', style({
-            transform: "scale(1)",
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-      transition('* => end', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.END,
-            transform: "scale(.3)",
-            borderRadius: "100%"
-          }),
-          animate('0.2s', style({
-            transform: "scale(1)",
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-      transition('* => open', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.OPEN,
-            transform: "scale(.3)",
-            borderRadius: "100%"
-          }),
-          animate('0.2s', style({
-            transform: "scale(1)",
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-      transition('open => closed', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.OPEN,
-          }),
-          animate('0.5s', style({
-            backgroundColor: FieldColor.CLOSED,
-          }))
-        ])
-      ]),
-      transition('* => path', [
-        sequence([
-          style({
-            backgroundColor: FieldColor.PATH,
-            transform: "scale(.3)",
-            borderRadius: "100%"
-          }),
-          animate('0.2s', style({
-            transform: "scale(1)",
-            borderRadius: "0%"
-          }))
-        ])
-      ]),
-    ])
+    normal,
+    immidiate
   ]
 })
 export class FieldComponent{
   @Input() field: Field | null = null;
   hoverColor: string = '';
+
   constructor(private algorithmService: AlgorithmsService, private settingsService: SettingsService, private fieldsService: FieldsService, private blockService: BlockService) {}
 
   changeOutline(){
@@ -136,8 +32,14 @@ export class FieldComponent{
     this.hoverColor = '';
   }
 
-  getTrigger(){
-    if(this.field == null) return ''
+  getNormalTrigger(){
+    if(this.algorithmService.finnished || this.field == null) return ''
+      
+    return this.blockService.getBlockByColor(this.field.getColor());
+  }
+
+  getImmidiateTrigger(){
+    if(!this.algorithmService.finnished || this.field == null) return ''
       
     return this.blockService.getBlockByColor(this.field.getColor());
   }
@@ -153,6 +55,8 @@ export class FieldComponent{
       if(field !== null) field.setColor(FieldColor.EMPTY);
     }
     this.field.setColor(color);
+    if(this.algorithmService.finnished)
+      this.algorithmService.startAlgorithm(this.settingsService.getSelectedAlgorithm().value);
   }
 
   onMouseDown(event:any){
