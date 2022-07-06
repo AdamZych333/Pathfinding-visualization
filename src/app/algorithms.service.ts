@@ -47,6 +47,7 @@ export class AlgorithmsService {
         break;
     }
     
+    console.log(this.finnished)
     this.finnished? this.animateMovesImmidietly(): this.animateMoves();    
   }
 
@@ -61,12 +62,14 @@ export class AlgorithmsService {
     setTimeout(() => {
       const move = this.toAnimate[0];
       this.toAnimate = this.toAnimate.filter(e => e != move);
+      if(move == undefined) return;
       this.fieldService.setField(move.field.x, move.field.y, move.color);
       if(this.toAnimate.length > 0)
         this.animateMoves();
-      else
+      else{
         this.running = false;
         this.finnished = true;
+      }
     }, this.delay);
   }
 
@@ -119,6 +122,6 @@ export class AlgorithmsService {
         }
       }    
     }
-    return [];
+    return toAnimate;
   }
 }

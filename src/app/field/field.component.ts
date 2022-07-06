@@ -33,14 +33,14 @@ export class FieldComponent{
   }
 
   getNormalTrigger(){
+    // console.log("1: "+this.algorithmService.finnished)
     if(this.algorithmService.finnished || this.field == null) return ''
-      
     return this.blockService.getBlockByColor(this.field.getColor());
   }
 
   getImmidiateTrigger(){
+    // console.log("2: "+this.algorithmService.finnished)
     if(!this.algorithmService.finnished || this.field == null) return ''
-      
     return this.blockService.getBlockByColor(this.field.getColor());
   }
 
@@ -52,9 +52,13 @@ export class FieldComponent{
     
     if(color === FieldColor.START || color == FieldColor.END){
       const field = this.fieldsService.findField(e => e.getColor() == color);
-      if(field !== null) field.setColor(FieldColor.EMPTY);
+      if(field !== null && this.field.getColor() != FieldColor.WALL) {
+        field.setColor(FieldColor.EMPTY);
+        this.field.setColor(color);
+      }
+    }else{
+      this.field.setColor(color);
     }
-    this.field.setColor(color);
     if(this.algorithmService.finnished)
       this.algorithmService.startAlgorithm(this.settingsService.getSelectedAlgorithm().value);
   }
