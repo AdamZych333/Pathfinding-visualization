@@ -19,18 +19,21 @@ export class AlgorithmsService {
     {value: Algorithm.DIJKSTRA, viewValue: 'Dijkstra'},
   ];
   delay: number = 0;
+  toAnimate: {field: Field, color: FieldColor}[] = [];
+  running: boolean = false;
 
   constructor(private fieldService: FieldsService) {}
 
   startAlgorithm(name: string){
-    this.fieldService.clearBoard()
+    this.running = true;
+    this.toAnimate = [];
+    this.fieldService.clearBoard();
     const startField: Field | null = this.fieldService.findField(e => e.getColor() == FieldColor.START);
     const endField: Field | null = this.fieldService.findField(e => e.getColor() == FieldColor.END);
     if(startField == null || endField == null) return;
-    let toAnimate: {field: Field, color: FieldColor}[] = [];
     switch(name){
       case Algorithm.ASTAR:
-        toAnimate = this.astar(startField, endField);
+        this.toAnimate = this.astar(startField, endField);
         break;
       case Algorithm.BFS:
         bfs();
@@ -43,16 +46,24 @@ export class AlgorithmsService {
         break;
     }
     
-    this.animateMoves(toAnimate);    
+    this.animateMoves();    
   }
 
-  private animateMoves(toAnimate: {field: Field, color: FieldColor}[]){
-    const move = toAnimate[0];
-    toAnimate = toAnimate.filter(e => e != move);
+  resetAlgorithm(){
+    this.toAnimate = [];
+    this.fieldService.clearBoard();
+    this.running = false;
+  }
+
+  private animateMoves(){
     setTimeout(() => {
+      const move = this.toAnimate[0];
+      this.toAnimate = this.toAnimate.filter(e => e != move);
       this.fieldService.setField(move.field.x, move.field.y, move.color);
-      if(toAnimate.length > 0)
-        this.animateMoves(toAnimate);
+      if(this.toAnimate.length > 0)
+        this.animateMoves();
+      else
+        this.running = false;
     }, this.delay);
   }
 

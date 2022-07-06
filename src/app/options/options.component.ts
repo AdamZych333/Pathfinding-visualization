@@ -16,7 +16,7 @@ export class OptionsComponent {
   placeables: Block[];
   maxSliderValue: number = 100;
 
-  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, private algorithmsService: AlgorithmsService, blockService: BlockService){
+  constructor(public settingsService: SettingsService, private fieldsService: FieldsService, public algorithmsService: AlgorithmsService, blockService: BlockService){
     this.selectedAlgorithm = settingsService.getSelectedAlgorithm();
     this.algorithms = algorithmsService.algorithms;
     this.placeables = blockService.getPlaceables();
@@ -28,6 +28,15 @@ export class OptionsComponent {
 
   onStartClick(){
     this.algorithmsService.startAlgorithm(this.selectedAlgorithm.value);
+  }
+
+  onStopClick(){
+    this.algorithmsService.startAlgorithm(this.selectedAlgorithm.value);
+  }
+
+  onResetClick(){
+    this.algorithmsService.resetAlgorithm();
+    this.fieldsService.createBoard();
   }
 
   onAlgorithmChange(){

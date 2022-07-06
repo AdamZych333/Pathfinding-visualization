@@ -143,7 +143,7 @@ export class FieldComponent{
   }
 
   onMouseEnter(event:any){
-    if(this.field == null || this.field.getColor() == FieldColor.START || this.field.getColor() == FieldColor.END || event.which !== 1) return;
+    if(this.algorithmService.running || this.field == null || this.field.getColor() == FieldColor.START || this.field.getColor() == FieldColor.END || event.which !== 1) return;
     const selectedOption = this.settingsService.getSelectedPlaceable();
     const color = selectedOption != null? selectedOption.type: '';
     if(color == '') return;
@@ -156,7 +156,7 @@ export class FieldComponent{
   }
 
   onMouseDown(event:any){
-    if(this.field == null) return;
+    if(this.algorithmService.running || this.field == null) return;
     this.onMouseEnter(event);
     const color = this.field.getColor();
     if(color === FieldColor.END || color === FieldColor.START){
@@ -167,7 +167,7 @@ export class FieldComponent{
   }
 
   onMouseUp(){
-    if(this.field == null) return;
+    if(this.algorithmService.running || this.field == null) return;
     const color = this.field.getColor();
     if(color === FieldColor.END || color === FieldColor.START)
       this.settingsService.rollBackSelectedPlaceable();

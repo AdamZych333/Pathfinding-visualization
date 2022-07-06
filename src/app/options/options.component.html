@@ -20,8 +20,9 @@
         aria-label="units">
     </mat-slider>
     </div>
-    <button class="clear-btn" (click)="onClearClick()">Clear</button>
+    <button class="clear-btn" (click)="onClearClick()" [disabled]="algorithmsService.running">Clear</button>
     <button class="start-btn" (click)="onStartClick()">Start</button>
+    <button class="reset-btn" (click)="onResetClick()">Reset</button>
     <div class="algorithms">
         <label for="algorithms">Algorithm:</label>
         <select name="algorithms" [(ngModel)]="selectedAlgorithm" (ngModelChange)="onAlgorithmChange()">

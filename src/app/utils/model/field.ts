@@ -29,19 +29,6 @@ export class Field{
         return Math.abs(this.x - fieldB.x) + Math.abs(this.y - fieldB.y);
     }
 
-    retecePath(startField: Field){
-        const path: Field[] = [];
-        let current: Field = this;
-
-        while(current != startField){
-            path.push(current);
-            if(current.parent == null) return [];
-            current = current.parent;
-        }
-
-        return path.reverse();
-    }
-
     isWalkable(){
         return this.color !== FieldColor.WALL;
     }
