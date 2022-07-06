@@ -1,16 +1,17 @@
 <div class="menu">
-    <div class="placeables">
-        <label for="placeables">Block to place:</label>
-        <select name="placeables" [(ngModel)]="settingsService.selectedPlaceable">
-            <option *ngFor="let placeable of placeables" [ngValue]="placeable">
+    <mat-form-field class="placeables" appearance="fill">
+        <mat-label for="placeables">Block to place:</mat-label>
+        <mat-select name="placeables" [(ngModel)]="settingsService.selectedPlaceable">
+            <mat-option *ngFor="let placeable of placeables" [value]="placeable">
                 {{placeable.viewValue}}
-            </option>
-        </select>
-        <div class="type" [style.background-color]="settingsService.selectedPlaceable.type"></div>
-    </div>
+                <div class="type" [style.background-color]="settingsService.selectedPlaceable.type"></div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <div class="delay">
         <div class="delay-label">Algorithm speed</div>
         <mat-slider
+        color="accent"
         (input)="onSliderChange($event)"
         thumbLabel
         step="1"
@@ -20,15 +21,15 @@
         aria-label="units">
     </mat-slider>
     </div>
-    <button class="clear-btn" (click)="onClearClick()" [disabled]="algorithmsService.running">Clear</button>
-    <button class="start-btn" (click)="onStartClick()">Start</button>
-    <button class="reset-btn" (click)="onResetClick()">Reset</button>
-    <div class="algorithms">
-        <label for="algorithms">Algorithm:</label>
-        <select name="algorithms" [(ngModel)]="selectedAlgorithm" (ngModelChange)="onAlgorithmChange()">
-            <option *ngFor="let algorithm of algorithms" [ngValue]="algorithm">
+    <button mat-raised-button color="accent" class="clear-btn" (click)="onClearClick()" [disabled]="algorithmsService.running">Clear</button>
+    <button mat-raised-button color="primary" class="start-btn" (click)="onStartClick()">Start</button>
+    <button mat-raised-button color="accent" class="reset-btn" (click)="onResetClick()">Reset</button>
+    <mat-form-field class="algorithms" appearance="fill">
+        <mat-label for="algorithms">Algorithm:</mat-label>
+        <mat-select name="algorithms" [(ngModel)]="selectedAlgorithm" (ngModelChange)="onAlgorithmChange()">
+            <mat-option *ngFor="let algorithm of algorithms" [value]="algorithm">
                 {{algorithm.viewValue}}
-            </option>
-        </select>
-    </div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>

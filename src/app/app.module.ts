@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +30,9 @@ import { DescriptionComponent } from './description/description.component';
     FormsModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
