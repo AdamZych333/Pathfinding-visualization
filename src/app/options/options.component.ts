@@ -42,6 +42,8 @@ export class OptionsComponent {
 
   onAlgorithmChange(){
     this.settingsService.setSelectedAlgorithm(this.selectedAlgorithm);
+    if(this.algorithmsService.finnished)
+      this.algorithmsService.startAlgorithm(this.selectedAlgorithm.value);
   }
 
   onSliderChange(event: any){

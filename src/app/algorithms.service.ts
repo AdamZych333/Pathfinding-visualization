@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldsService } from './fields.service';
 import { Algorithm } from './utils/constants/algorithms';
-import { bfs } from './utils/algorithms/bfs';
 import { dfs } from './utils/algorithms/dfs';
 import { dijkstra } from './utils/algorithms/dijkstra';
 import { Field } from './utils/model/field';
@@ -37,7 +36,7 @@ export class AlgorithmsService {
         this.toAnimate = this.astar(startField, endField);
         break;
       case Algorithm.BFS:
-        bfs();
+        this.toAnimate = this.bfs(startField, endField);
         break;
       case Algorithm.DFS:
         dfs();
@@ -122,6 +121,38 @@ export class AlgorithmsService {
         }
       }    
     }
+    return toAnimate;
+  }
+
+  bfs(start: Field, end: Field): {field: Field, color: FieldColor}[]{
+    const toAnimate: {field: Field, color: FieldColor}[] = [];
+    let open: Field[] = [];
+    let closed: Field[] = [];
+    open.push(start)
+
+    while(open.length > 0){
+      const current = open[0];
+      open = open.filter(e => e != current);
+      closed.push(current);
+      toAnimate.push({field: current, color: FieldColor.CLOSED});
+
+      if(current == end) {
+        this.fieldService.retecePath(current, start).forEach(e => {
+          toAnimate.push({field: e, color: FieldColor.PATH});
+        });
+        return toAnimate;
+      }
+
+      for(let neighbour of this.fieldService.getNeighbours(current)){
+        if(!neighbour.isWalkable() || closed.includes(neighbour)) continue;
+        neighbour.parent = current;
+        if(!open.includes(neighbour)){
+          open.push(neighbour);
+          toAnimate.push({field: neighbour, color: FieldColor.OPEN});
+        }
+      }
+    }
+
     return toAnimate;
   }
 }
