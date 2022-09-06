@@ -1,6 +1,6 @@
-# PathfindingVisualization
+# Pathfinding algorithms visualizer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
+My first web app written using Angular 14. There are implemented algorithms: A*, DFS, BFS, Dijkstra. You can place walls that algorithm has to avoid and set starting and ending points of the path. If you want to you can generate maze which is created using randomized prim's algorithm.
 You can access it on https://adamzych333.github.io/Pathfinding-visualization/.
 
 ## Development server
